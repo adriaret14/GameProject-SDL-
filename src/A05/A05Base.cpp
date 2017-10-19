@@ -6,6 +6,7 @@
 //Game general information
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
+#define FPS 60
 
 int main(int, char*[]) {
 
@@ -42,6 +43,19 @@ int main(int, char*[]) {
 	SDL_Rect playerTarget{ 0, 0, 100, 100 };
 
 		// --- Animated Sprite ---
+
+	SDL_Texture *playerTexture2{ IMG_LoadTexture(renderer, "../../res/img/sp01.png") };
+	SDL_Rect playerRect2, playerPosition;
+	int textWidth, textHeight, frameWidth, frameHeight;
+	SDL_QueryTexture(playerTexture2, NULL, NULL, &textWidth, &textHeight);
+	frameWidth = textWidth / 6;
+	frameHeight = textHeight / 1;
+	playerPosition.x = playerPosition.y = 0;
+	playerRect2.x = playerRect2.y = 0;
+	playerPosition.h = playerRect2.h = frameHeight;
+	playerPosition.w = playerRect2.w = frameWidth;
+	int frameTime = 0;
+
 
 	// --- TEXT ---
 	TTF_Font *font{ TTF_OpenFont("../../res/ttf/saiyan.ttf", 80) };
@@ -87,6 +101,17 @@ int main(int, char*[]) {
 		playerRect.x += (playerTarget.x - playerRect.x) / 10;
 		playerRect.y += (playerTarget.y - playerRect.y) / 10;
 
+		frameTime++;
+		if (FPS / frameTime <= 9)
+		{
+			frameTime = 0;
+			playerRect2.x += frameWidth;
+			if (playerRect2.x >= textWidth)
+			{
+				playerRect2.x = 0;
+			}
+		}
+
 		// DRAW
 			//Background
 		SDL_RenderClear(renderer);
@@ -94,6 +119,8 @@ int main(int, char*[]) {
 		SDL_RenderCopy(renderer, bgTexture, nullptr, &bgRect);
 
 			//Animated Sprite
+		SDL_RenderCopy(renderer, playerTexture2, &playerRect2, &playerPosition);
+
 		SDL_RenderCopy(renderer, playerTexture, nullptr, &playerRect);
 
 		SDL_RenderCopy(renderer, textTexture, nullptr, &textRect);
