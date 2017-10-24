@@ -12,6 +12,7 @@
 #define SCREEN_HEIGHT 600
 #define FPS 60
 
+//Función para aleatorizar las posiciones de las monedas
 bool crearMoneda(SDL_Rect &moneda1, SDL_Rect &moneda2, SDL_Rect &moneda3, SDL_Rect &moneda4, SDL_Rect &moneda5, int num)
 {
 	int x = 32 * (rand() % 24);
@@ -75,10 +76,16 @@ int main(int, char*[]) {
 	if (bgTexture == nullptr) throw "No se han podido cargar as texturas";
 	SDL_Rect bgRect{ 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
 
+	SDL_Texture *bgTexture0{ IMG_LoadTexture(renderer, "../../res/img/bg.jpg") };
+
+	if (bgTexture0 == nullptr) throw "No se han podido cargar as texturas";
+	SDL_Rect bgRect0{ 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
+
 	/*SDL_Texture *playerTexture(IMG_LoadTexture(renderer, "../../res/img/kintoun.png"));
 	if (playerTexture == nullptr) throw "No se han podido cargar as texturas";
 	SDL_Rect playerRect{ 0, 0, 350, 189 };*/
 
+	int escena = 0;
 	int ScoreP1 = 0;
 	int ScoreP2 = 0;
 	int cont = 0;
@@ -90,6 +97,7 @@ int main(int, char*[]) {
 	SDL_Rect moneda4{0, 0, 32, 32};
 	SDL_Rect moneda5{0, 0, 32, 32};
 	srand (time(NULL));
+
 	//Bucle para generar monedas de forma aleatoria
 	while (cont<5)
 	{
@@ -97,11 +105,6 @@ int main(int, char*[]) {
 			
 	}
 
-	/*std::cout << "Moneda 1: " << moneda1.x << ", " << moneda1.y << std::endl;
-	std::cout << "Moneda 2: " << moneda2.x << ", " << moneda2.y << std::endl;
-	std::cout << "Moneda 3: " << moneda3.x << ", " << moneda3.y << std::endl;
-	std::cout << "Moneda 4: " << moneda4.x << ", " << moneda4.y << std::endl;
-	std::cout << "Moneda 5: " << moneda5.x << ", " << moneda5.y << std::endl;*/
 
 	SDL_Rect playerTarget{ 0, 0, 100, 100 };
 
@@ -167,8 +170,6 @@ int main(int, char*[]) {
 	RnumPos1.w = 48;
 
 	SDL_Rect RLnum2, LnumPos2, RRnum2, RnumPos2;
-	//int numWidth, numHeight, numFrameWidth, numFrameHeight;
-	//SDL_QueryTexture(numeros, NULL, NULL, &numWidth, &numHeight);
 	numFrameWidth = 72;
 	numFrameHeight = 77;
 	LnumPos2.x = 100;
@@ -191,28 +192,6 @@ int main(int, char*[]) {
 
 		// --- Animated Sprite ---
 
-	/*SDL_Texture *playerTexture2{ IMG_LoadTexture(renderer, "../../res/img/sp01.png") };
-	SDL_Rect playerRect2, playerPosition;
-	int textWidth, textHeight, frameWidth, frameHeight;
-	SDL_QueryTexture(playerTexture2, NULL, NULL, &textWidth, &textHeight);
-	frameWidth = textWidth / 6;
-	frameHeight = textHeight / 1;
-	playerPosition.x = playerPosition.y = 0;
-	playerRect2.x = playerRect2.y = 0;
-	playerPosition.h = playerRect2.h = frameHeight;
-	playerPosition.w = playerRect2.w = frameWidth;
-	int frameTime = 0;*/
-
-
-	// --- TEXT ---
-	/*TTF_Font *font{ TTF_OpenFont("../../res/ttf/saiyan.ttf", 80) };
-	if (font == nullptr) throw "No se puee inicilaicar SD_ttf";
-	SDL_Surface *tmpSurf{ TTF_RenderText_Blended(font, "My first SDL game", SDL_Color{ 255, 150, 0, 255}) };
-	if (tmpSurf == nullptr) TTF_CloseFont(font), throw "Unable to create the SDL text surface";
-	SDL_Texture *textTexture{ SDL_CreateTextureFromSurface(renderer, tmpSurf) };
-	SDL_Rect textRect{ 100, 50, tmpSurf->w, tmpSurf->h };
-	SDL_FreeSurface(tmpSurf);
-	TTF_CloseFont(font);*/
 
 	TTF_Font *font{ TTF_OpenFont("../../res/ttf/MarioLuigi2.ttf", 80) };
 	if (font == nullptr) throw "No se puede inicializar SDL_ttf";
@@ -242,6 +221,22 @@ int main(int, char*[]) {
 	SDL_FreeSurface(tmpSurfPunt2);
 	TTF_CloseFont(font2);
 
+	TTF_Font *font3{ TTF_OpenFont("../../res/ttf/MarioLuigi2.ttf", 80) };
+	if (font3 == nullptr) throw "No se puedde inicializar SDL_ttf en font3";
+	SDL_Surface *tmpSurf3{ TTF_RenderText_Blended(font3, "PLAY", SDL_Color{0, 255, 0, 255}) };
+	if (tmpSurf3 == nullptr) TTF_CloseFont(font3), throw "No se puede crear la superficie de texto";
+	SDL_Texture *textTexturePlay{ SDL_CreateTextureFromSurface(renderer, tmpSurf3) };
+	SDL_Rect textRectPlay{ SCREEN_WIDTH/2 - tmpSurf3->w/2, SCREEN_HEIGHT/3 - tmpSurf3->h/2, tmpSurf3->w, tmpSurf3->h };
+	SDL_FreeSurface(tmpSurf3);
+
+	SDL_Surface *tmpSurf4{ TTF_RenderText_Blended(font3, "EXIT", SDL_Color{ 255, 0, 0, 255 }) };
+	if (tmpSurf4 == nullptr) TTF_CloseFont(font3), throw "No se puede crear la superficie de texto";
+	SDL_Texture *textTextureExit{ SDL_CreateTextureFromSurface(renderer, tmpSurf4) };
+	SDL_Rect textRectExit{ SCREEN_WIDTH / 2 - tmpSurf4->w / 2, 2*SCREEN_HEIGHT / 3 - tmpSurf4->h / 2, tmpSurf4->w, tmpSurf4->h };
+	SDL_FreeSurface(tmpSurf4);
+	TTF_CloseFont(font3);
+
+
 	// --- AUDIO ---
 	if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 1024) == -1)
 	{
@@ -259,45 +254,45 @@ int main(int, char*[]) {
 		// HANDLE EVENTS
 
 		//Colisiones con monedas jugador1
-		if (jugador1Pos.x >= moneda1.x-25 && jugador1Pos.x <= moneda1.x + 25)
+		if (jugador1Pos.x >= moneda1.x - 25 && jugador1Pos.x <= moneda1.x + 25)
 		{
-			if (jugador1Pos.y >= moneda1.y-25 && jugador1Pos.y <= moneda1.y + 25)
+			if (jugador1Pos.y >= moneda1.y - 25 && jugador1Pos.y <= moneda1.y + 25)
 			{
 				//P1 colisiona con moneda1
 				while (!crearMoneda(moneda1, moneda2, moneda3, moneda4, moneda5, 0));
 				ScoreP1++;
 			}
 		}
-		if (jugador1Pos.x >= moneda2.x-25 && jugador1Pos.x <= moneda2.x + 25)
+		if (jugador1Pos.x >= moneda2.x - 25 && jugador1Pos.x <= moneda2.x + 25)
 		{
-			if (jugador1Pos.y >= moneda2.y-25 && jugador1Pos.y <= moneda2.y + 25)
+			if (jugador1Pos.y >= moneda2.y - 25 && jugador1Pos.y <= moneda2.y + 25)
 			{
 				//P1 colisiona con moneda2
 				while (!crearMoneda(moneda1, moneda2, moneda3, moneda4, moneda5, 1));
 				ScoreP1++;
 			}
 		}
-		if (jugador1Pos.x >= moneda3.x-25 && jugador1Pos.x <= moneda3.x + 25)
+		if (jugador1Pos.x >= moneda3.x - 25 && jugador1Pos.x <= moneda3.x + 25)
 		{
-			if (jugador1Pos.y >= moneda3.y-25 && jugador1Pos.y <= moneda3.y + 25)
+			if (jugador1Pos.y >= moneda3.y - 25 && jugador1Pos.y <= moneda3.y + 25)
 			{
 				//P1 colisiona con moneda3
 				while (!crearMoneda(moneda1, moneda2, moneda3, moneda4, moneda5, 2));
 				ScoreP1++;
 			}
 		}
-		if (jugador1Pos.x >= moneda4.x-25 && jugador1Pos.x <= moneda4.x + 25)
+		if (jugador1Pos.x >= moneda4.x - 25 && jugador1Pos.x <= moneda4.x + 25)
 		{
-			if (jugador1Pos.y >= moneda4.y-25 && jugador1Pos.y <= moneda4.y + 25)
+			if (jugador1Pos.y >= moneda4.y - 25 && jugador1Pos.y <= moneda4.y + 25)
 			{
 				//P1 colisiona con moneda4
 				while (!crearMoneda(moneda1, moneda2, moneda3, moneda4, moneda5, 3));
 				ScoreP1++;
 			}
 		}
-		if (jugador1Pos.x >= moneda5.x-25 && jugador1Pos.x <= moneda5.x + 25)
+		if (jugador1Pos.x >= moneda5.x - 25 && jugador1Pos.x <= moneda5.x + 25)
 		{
-			if (jugador1Pos.y >= moneda5.y-25 && jugador1Pos.y <= moneda5.y + 25)
+			if (jugador1Pos.y >= moneda5.y - 25 && jugador1Pos.y <= moneda5.y + 25)
 			{
 				//P1 colisiona con moneda5
 				while (!crearMoneda(moneda1, moneda2, moneda3, moneda4, moneda5, 4));
@@ -351,15 +346,18 @@ int main(int, char*[]) {
 				ScoreP2++;
 			}
 		}
-		const Uint8 *state = SDL_GetKeyboardState(NULL);
 
+		if(escena == 1)
+		{
+
+		const Uint8 *state = SDL_GetKeyboardState(NULL);
+		
 		//Controles jugador 1
 		if (state[SDL_SCANCODE_W])
 		{
 			if (jugador1Pos.y >= 140 + 20)
 			{
 				jugador1Pos.y = jugador1Pos.y - 5;
-				//Rjugador1.x = 128;
 				Rjugador1.y = 96;
 				move1 = true;
 			}
@@ -370,7 +368,6 @@ int main(int, char*[]) {
 			if (jugador1Pos.y <= 600 - 32)
 			{
 				jugador1Pos.y = jugador1Pos.y + 5;
-				//Rjugador1.x = 128;
 				Rjugador1.y = 0;
 				move1 = true;
 			}
@@ -381,7 +378,6 @@ int main(int, char*[]) {
 			if (jugador1Pos.x >= -32)
 			{
 				jugador1Pos.x = jugador1Pos.x - 5;
-				//Rjugador1.x = 128;
 				Rjugador1.y = 32;
 				move1 = true;
 			}
@@ -396,7 +392,6 @@ int main(int, char*[]) {
 			if (jugador1Pos.x <= 800)
 			{
 				jugador1Pos.x = jugador1Pos.x + 5;
-				//Rjugador1.x = 128;
 				Rjugador1.y = 64;
 				move1 = true;
 			}
@@ -411,7 +406,6 @@ int main(int, char*[]) {
 			if (jugador2Pos.y >= 140 + 20)
 			{
 				jugador2Pos.y = jugador2Pos.y - 5;
-				//Rjugador1.x = 128;
 				Rjugador2.y = 96;
 				move2 = true;
 			}
@@ -421,7 +415,6 @@ int main(int, char*[]) {
 			if (jugador2Pos.y <= 600 - 32)
 			{
 				jugador2Pos.y = jugador2Pos.y + 5;
-				//Rjugador1.x = 128;
 				Rjugador2.y = 0;
 				move2 = true;
 			}
@@ -431,7 +424,6 @@ int main(int, char*[]) {
 			if (jugador2Pos.x >= -32)
 			{
 				jugador2Pos.x = jugador2Pos.x - 5;
-				//Rjugador1.x = 128;
 				Rjugador2.y = 32;
 				move2 = true;
 			}
@@ -445,7 +437,6 @@ int main(int, char*[]) {
 			if (jugador2Pos.x <= 800)
 			{
 				jugador2Pos.x = jugador2Pos.x + 5;
-				//Rjugador1.x = 128;
 				Rjugador2.y = 64;
 				move2 = true;
 			}
@@ -454,135 +445,39 @@ int main(int, char*[]) {
 				jugador2Pos.x = -32;
 			}
 		}
+	}
 		while (SDL_PollEvent(&event)) {
 			switch (event.type) {
 			case SDL_QUIT:		isRunning = false; break;
 			case SDL_KEYDOWN:	
-				if (event.key.keysym.sym == SDLK_ESCAPE) isRunning = false;
-
-				////Controles jugador 1
-				//if(event.key.keysym.sym == SDLK_w)
-				//{
-				//	if (jugador1Pos.y >= 140+20)
-				//	{
-				//		jugador1Pos.y = jugador1Pos.y - 5;
-				//		//Rjugador1.x = 128;
-				//		Rjugador1.y = 96;
-				//		move1 = true;
-				//	}
-				//	
-				//}
-				//if (event.key.keysym.sym == SDLK_s)
-				//{
-				//	if (jugador1Pos.y <= 600 - 32)
-				//	{
-				//		jugador1Pos.y = jugador1Pos.y + 5;
-				//		//Rjugador1.x = 128;
-				//		Rjugador1.y = 0;
-				//		move1 = true;
-				//	}
-				//	
-				//}
-				//if (event.key.keysym.sym == SDLK_a)
-				//{
-				//	if (jugador1Pos.x >= -32)
-				//	{
-				//		jugador1Pos.x = jugador1Pos.x - 5;
-				//		//Rjugador1.x = 128;
-				//		Rjugador1.y = 32;
-				//		move1 = true;
-				//	}
-				//	else
-				//	{
-				//		jugador1Pos.x = 800;
-				//	}
-				//	
-				//}
-				//if (event.key.keysym.sym == SDLK_d)
-				//{
-				//	if (jugador1Pos.x <= 800)
-				//	{
-				//		jugador1Pos.x = jugador1Pos.x + 5;
-				//		//Rjugador1.x = 128;
-				//		Rjugador1.y = 64;
-				//		move1 = true;
-				//	}
-				//	else
-				//	{
-				//		jugador1Pos.x = -32;
-				//	}
-				//	
-				//}
-				/*
-				//Controles jugador 2
-				if (event.key.keysym.sym ==SDLK_UP)
-				{
-					if (jugador2Pos.y >= 140 + 20)
-					{
-						jugador2Pos.y = jugador2Pos.y - 5;
-						//Rjugador1.x = 128;
-						Rjugador2.y = 96;
-						move2 = true;
-					}
-
-				}
-				if (event.key.keysym.sym == SDLK_DOWN)
-				{
-					if (jugador2Pos.y <= 600 - 32)
-					{
-						jugador2Pos.y = jugador2Pos.y + 5;
-						//Rjugador1.x = 128;
-						Rjugador2.y = 0;
-						move2 = true;
-					}
-
-				}
-				if (event.key.keysym.sym == SDLK_LEFT)
-				{
-					if (jugador2Pos.x >= -32)
-					{
-						jugador2Pos.x = jugador2Pos.x - 5;
-						//Rjugador1.x = 128;
-						Rjugador2.y = 32;
-						move2 = true;
-					}
-					else
-					{
-						jugador2Pos.x = 800;
-					}
-
-				}
-				if (event.key.keysym.sym == SDLK_RIGHT)
-				{
-					if (jugador2Pos.x <= 800)
-					{
-						jugador2Pos.x = jugador2Pos.x + 5;
-						//Rjugador1.x = 128;
-						Rjugador2.y = 64;
-						move2 = true;
-					}
-					else
-					{
-						jugador2Pos.x = -32;
-					}
-
-				}
-
-				if(event.type==SDL_KEYUP)
-				{
-					move = false;
-				}*/
+				if (event.key.keysym.sym == SDLK_ESCAPE && escena == 1) escena = 0;				
 				break;
 			case SDL_KEYUP:	
-				
+				if (event.key.keysym.sym == SDLK_w || event.key.keysym.sym == SDLK_s || event.key.keysym.sym == SDLK_d || event.key.keysym.sym == SDLK_a)
+				{
+					move1 = false;
+				}
+				if (event.key.keysym.sym == SDLK_UP || event.key.keysym.sym == SDLK_DOWN || event.key.keysym.sym == SDLK_RIGHT || event.key.keysym.sym == SDLK_LEFT)
+				{
+					move2 = false;
+				}
 				break;
+			case SDL_MOUSEBUTTONDOWN:
+				int mouseX, mouseY;
+				SDL_GetMouseState(&mouseX, &mouseY);
+				if ((mouseX >= textRectPlay.x && mouseX <= textRectPlay.x + textRectPlay.w) && (mouseY >= textRectPlay.y && mouseY <= textRectPlay.y + textRectPlay.h))
+				{
+					escena = 1;
+				}
+				if ((mouseX >= textRectExit.x && mouseX <= textRectExit.x + textRectExit.w) && (mouseY >= textRectExit.y && mouseY <= textRectExit.y + textRectExit.h))
+				{
+					isRunning = false;
+				}
 			default:;
 			}
 		}
 
 		// UPDATE
-		//Rjugador1.x += (playerTarget.x - Rjugador1.x) / 4;
-		//Rjugador1.y += (playerTarget.y - Rjugador1.y) / 4;
 
 
 		RRnum1.x = (ScoreP1 % 10) * 72;
@@ -606,7 +501,6 @@ int main(int, char*[]) {
 		}
 		else {
 			Rjugador1.x = 128;
-			//Rjugador1.y = 32;
 		}
 
 		if (move2)
@@ -624,40 +518,48 @@ int main(int, char*[]) {
 		}
 		else {
 			Rjugador2.x = 320;
-			//Rjugador1.y = 32;
 		}
 
 
 
 
 		// DRAW
-			//Background
 		SDL_RenderClear(renderer);
-
-		SDL_RenderCopy(renderer, bgTexture, nullptr, &bgRect);
+			//Background
+		if (escena == 1) 
+		{
+			SDL_RenderCopy(renderer, bgTexture, nullptr, &bgRect);
+		}
+		else if (escena == 0)
+		{
+			SDL_RenderCopy(renderer, bgTexture0, nullptr, &bgRect0);
+		}	
 
 			//Animated Sprite
 		
-		/*SDL_RenderCopy(renderer, playerTexture, nullptr, &playerRect);*/
 
-		SDL_RenderCopy(renderer, textTexture, nullptr, &textRect);
-		SDL_RenderCopy(renderer, textTexture2, nullptr, &textRect2);
-		SDL_RenderCopy(renderer, textTexture3, nullptr, &textRect3);
-		SDL_RenderCopy(renderer, numeros, &RLnum1, &LnumPos1);
-		SDL_RenderCopy(renderer, numeros, &RRnum1, &RnumPos1);
-		SDL_RenderCopy(renderer, numeros, &RLnum2, &LnumPos2);
-		SDL_RenderCopy(renderer, numeros, &RRnum2, &RnumPos2);
-		SDL_RenderCopy(renderer, moneda, nullptr, &moneda1);
-		SDL_RenderCopy(renderer, moneda, nullptr, &moneda2);
-		SDL_RenderCopy(renderer, moneda, nullptr, &moneda3);
-		SDL_RenderCopy(renderer, moneda, nullptr, &moneda4);
-		SDL_RenderCopy(renderer, moneda, nullptr, &moneda5);
-		SDL_RenderCopy(renderer, jugador1, &Rjugador1, &jugador1Pos);
-		SDL_RenderCopy(renderer, jugador2, &Rjugador2, &jugador2Pos);
-
-
-
-
+		if (escena == 1)
+		{
+			SDL_RenderCopy(renderer, textTexture, nullptr, &textRect);
+			SDL_RenderCopy(renderer, textTexture2, nullptr, &textRect2);
+			SDL_RenderCopy(renderer, textTexture3, nullptr, &textRect3);
+			SDL_RenderCopy(renderer, numeros, &RLnum1, &LnumPos1);
+			SDL_RenderCopy(renderer, numeros, &RRnum1, &RnumPos1);
+			SDL_RenderCopy(renderer, numeros, &RLnum2, &LnumPos2);
+			SDL_RenderCopy(renderer, numeros, &RRnum2, &RnumPos2);
+			SDL_RenderCopy(renderer, moneda, nullptr, &moneda1);
+			SDL_RenderCopy(renderer, moneda, nullptr, &moneda2);
+			SDL_RenderCopy(renderer, moneda, nullptr, &moneda3);
+			SDL_RenderCopy(renderer, moneda, nullptr, &moneda4);
+			SDL_RenderCopy(renderer, moneda, nullptr, &moneda5);
+			SDL_RenderCopy(renderer, jugador1, &Rjugador1, &jugador1Pos);
+			SDL_RenderCopy(renderer, jugador2, &Rjugador2, &jugador2Pos);
+		}
+		else if (escena == 0)
+		{
+			SDL_RenderCopy(renderer, textTexturePlay, nullptr, &textRectPlay);
+			SDL_RenderCopy(renderer, textTextureExit, nullptr, &textRectExit);
+		}
 		SDL_RenderPresent(renderer);
 
 	}
@@ -666,9 +568,13 @@ int main(int, char*[]) {
 	SDL_DestroyTexture(textTexture);
 	SDL_DestroyTexture(textTexture2);
 	SDL_DestroyTexture(textTexture3);
-	/*SDL_DestroyTexture(playerTexture);*/
-	SDL_DestroyTexture(bgTexture);
+	SDL_DestroyTexture(textTexturePlay);
+	SDL_DestroyTexture(textTextureExit);
+	SDL_DestroyTexture(jugador1);
+	SDL_DestroyTexture(jugador2);
 	SDL_DestroyTexture(moneda);
+	SDL_DestroyTexture(bgTexture);
+	SDL_DestroyTexture(bgTexture0);
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
 
