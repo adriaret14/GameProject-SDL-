@@ -7,6 +7,8 @@
 #include <stdio.h>
 #include <iostream>
 
+#include "Texto.h"
+
 //Game general information
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
@@ -221,6 +223,8 @@ int main(int, char*[]) {
 	SDL_FreeSurface(tmpSurfPunt2);
 	TTF_CloseFont(font2);
 
+	Texto *textoPlay = new Texto(*renderer, "../../res/ttf/MarioLuigi2.ttf", "PLAY", 80, std::vector<int>{SCREEN_WIDTH /2, SCREEN_HEIGHT/3}, SDL_Color{ 0, 255, 0, 255 });
+	/*
 	TTF_Font *font3{ TTF_OpenFont("../../res/ttf/MarioLuigi2.ttf", 80) };
 	if (font3 == nullptr) throw "No se puedde inicializar SDL_ttf en font3";
 	SDL_Surface *tmpSurf3{ TTF_RenderText_Blended(font3, "PLAY", SDL_Color{0, 255, 0, 255}) };
@@ -235,6 +239,7 @@ int main(int, char*[]) {
 	SDL_Rect textRectExit{ SCREEN_WIDTH / 2 - tmpSurf4->w / 2, 2*SCREEN_HEIGHT / 3 - tmpSurf4->h / 2, tmpSurf4->w, tmpSurf4->h };
 	SDL_FreeSurface(tmpSurf4);
 	TTF_CloseFont(font3);
+	*/
 
 
 	// --- AUDIO ---
@@ -463,7 +468,7 @@ int main(int, char*[]) {
 				}
 				break;
 			case SDL_MOUSEBUTTONDOWN:
-				int mouseX, mouseY;
+				/*int mouseX, mouseY;
 				SDL_GetMouseState(&mouseX, &mouseY);
 				if ((mouseX >= textRectPlay.x && mouseX <= textRectPlay.x + textRectPlay.w) && (mouseY >= textRectPlay.y && mouseY <= textRectPlay.y + textRectPlay.h))
 				{
@@ -472,7 +477,7 @@ int main(int, char*[]) {
 				if ((mouseX >= textRectExit.x && mouseX <= textRectExit.x + textRectExit.w) && (mouseY >= textRectExit.y && mouseY <= textRectExit.y + textRectExit.h))
 				{
 					isRunning = false;
-				}
+				}*/
 			default:;
 			}
 		}
@@ -557,8 +562,9 @@ int main(int, char*[]) {
 		}
 		else if (escena == 0)
 		{
-			SDL_RenderCopy(renderer, textTexturePlay, nullptr, &textRectPlay);
-			SDL_RenderCopy(renderer, textTextureExit, nullptr, &textRectExit);
+			/*SDL_RenderCopy(renderer, textTexturePlay, nullptr, &textRectPlay);
+			SDL_RenderCopy(renderer, textTextureExit, nullptr, &textRectExit);*/
+			textoPlay->draw();
 		}
 		SDL_RenderPresent(renderer);
 
@@ -568,8 +574,9 @@ int main(int, char*[]) {
 	SDL_DestroyTexture(textTexture);
 	SDL_DestroyTexture(textTexture2);
 	SDL_DestroyTexture(textTexture3);
-	SDL_DestroyTexture(textTexturePlay);
-	SDL_DestroyTexture(textTextureExit);
+	textoPlay->~Texto();
+	//SDL_DestroyTexture(textTexturePlay);
+	//SDL_DestroyTexture(textTextureExit);
 	SDL_DestroyTexture(jugador1);
 	SDL_DestroyTexture(jugador2);
 	SDL_DestroyTexture(moneda);

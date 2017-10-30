@@ -152,6 +152,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="A05Base.cpp" />
+    <ClCompile Include="Background.cpp" />
+    <ClCompile Include="Boton.cpp" />
+    <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="Texto.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Background.h" />
+    <ClInclude Include="Boton.h" />
+    <ClInclude Include="Menu.h" />
+    <ClInclude Include="Texto.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
