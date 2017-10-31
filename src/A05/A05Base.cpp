@@ -50,6 +50,20 @@ bool crearMoneda(SDL_Rect &moneda1, SDL_Rect &moneda2, SDL_Rect &moneda3, SDL_Re
 	}
 	return false;
 }
+
+bool colision(SDL_Rect r1, SDL_Rect r2)
+{
+	return (((r2.x > r1.x && r2.x < r1.x + r1.w) && (r2.y > r1.y && r2.y < r1.y + r1.h)) ||
+		((r2.x + r2.w > r1.x && r2.x + r2.w < r1.x + r1.w) && (r2.y > r1.y && r2.y < r1.y + r1.h)) ||
+		((r2.x > r1.x && r2.x < r1.x + r1.w) && (r2.y + r2.h > r1.y && r2.y + r2.h < r1.y + r1.h)) ||
+		(((r2.x + r2.w > r1.x && r2.x + r2.w < r1.x + r1.w) && (r2.y + r2.h > r1.y && r2.y + r2.h < r1.y + r1.h))));
+}
+
+bool coorEnRect(std::vector<int> pos, SDL_Rect r)
+{
+	return ((pos[0] > r.x && pos[0] < r.x + r.w) && (pos[1] > r.y && pos[1] < r.y + r.h));
+}
+
 int main(int, char*[]) {
 
 	// --- INIT ---
@@ -451,6 +465,7 @@ int main(int, char*[]) {
 			}
 		}
 	}
+		/*
 		while (SDL_PollEvent(&event)) {
 			switch (event.type) {
 			case SDL_QUIT:		isRunning = false; break;
@@ -477,9 +492,9 @@ int main(int, char*[]) {
 				if ((mouseX >= textRectExit.x && mouseX <= textRectExit.x + textRectExit.w) && (mouseY >= textRectExit.y && mouseY <= textRectExit.y + textRectExit.h))
 				{
 					isRunning = false;
-				}*/
+				}
 			default:;
-			}
+			}*/
 		}
 
 		// UPDATE

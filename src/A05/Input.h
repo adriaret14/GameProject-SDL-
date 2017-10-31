@@ -8,14 +8,28 @@
 #include <iostream>
 #include <vector>
 #pragma once
-class Background
+class Input
 {
 public:
-	Background( SDL_Renderer &, std::string, int, int );
-	~Background();
+	Input();
+	~Input();
 
-	SDL_Renderer &renderer;
-	SDL_Texture *bgTextura;
-	SDL_Rect	 bgRect;
+	void update();
+	std::vector<int> getMousePos();
+	SDL_Event event;
+
+	bool w;
+	bool a;
+	bool s;
+	bool d;
+
+	bool up;
+	bool left;
+	bool down;
+	bool right;
+
+	bool mouse;
+	bool esc;
+	bool quit;
 };
 

@@ -16,7 +16,7 @@ Texto::Texto(SDL_Renderer &r, std::string p, std::string t, int s, std::vector<i
 	if (tmpSurf == nullptr) TTF_CloseFont(font), throw "No se puede crear la superficie de texto";
 	SDL_Texture *tmpTexture{ SDL_CreateTextureFromSurface(&renderer, tmpSurf) };
 	textura = tmpTexture;
-	SDL_Rect tmpRect{ posicion[0] - tmpSurf->w / 2, posicion[1] - tmpSurf->h / 2, tmpSurf->w, tmpSurf->h };
+	SDL_Rect tmpRect{ posicion[0], posicion[1], tmpSurf->w, tmpSurf->h };
 	rect = tmpRect;
 	SDL_FreeSurface(tmpSurf);
 	TTF_CloseFont(font);

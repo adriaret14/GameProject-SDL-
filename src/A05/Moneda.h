@@ -7,15 +7,19 @@
 #include <stdio.h>
 #include <iostream>
 #include <vector>
+#include <math.h>
 #pragma once
-class Background
+class Moneda
 {
 public:
-	Background( SDL_Renderer &, std::string, int, int );
-	~Background();
+	Moneda( SDL_Renderer &, std::string, std::vector<Moneda>, int, int, int );
+	~Moneda();
+	
+	void respawn( std::vector<Moneda>, int, int, int );
+	void draw();
 
 	SDL_Renderer &renderer;
-	SDL_Texture *bgTextura;
-	SDL_Rect	 bgRect;
+	SDL_Rect rect;
+	SDL_Texture *textura;
 };
 

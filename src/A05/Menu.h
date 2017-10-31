@@ -9,23 +9,24 @@
 #include <vector>
 #pragma once
 #include "Boton.h"
+#include "Background.h"
 class Menu
 {
 public:
-	Menu( SDL_Renderer & , Boton, Boton);
+	Menu( SDL_Renderer & , Boton &, Boton & );
 	~Menu();
 
 	//Renderer
 	SDL_Renderer &renderer;
 
 	//Background
-	
+	Background &background;
 
 	//Botón play
-	Boton bPlay;
+	Boton &bPlay;
 
 	//Botón exit
-	Boton bExit;
+	Boton &bExit;
 
 
 };

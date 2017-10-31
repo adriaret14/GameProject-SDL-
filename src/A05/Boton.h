@@ -17,7 +17,8 @@ public:
 	Boton( Texto );
 	~Boton();
 
-	void accion();
+	void play();
+	void exit();
 	void draw();
 
 	Texto texto;
