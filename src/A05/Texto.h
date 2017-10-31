@@ -16,7 +16,6 @@ public:
 
 	void draw();
 
-private:
 	std::string texto;
 	std::string path;
 	int size;

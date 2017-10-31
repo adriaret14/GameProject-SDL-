@@ -37,6 +37,7 @@ Moneda::Moneda( SDL_Renderer & r, std::string path, std::vector<Moneda> v, int s
 
 Moneda::~Moneda()
 {
+	SDL_DestroyTexture(textura);
 }
 
 void Moneda::respawn(std::vector<Moneda> v, int screenWidth, int screenHeight, int horizon)
@@ -65,4 +66,9 @@ void Moneda::respawn(std::vector<Moneda> v, int screenWidth, int screenHeight, i
 			rect.y = y;
 		}
 	} while (!flag);
+}
+
+void Moneda::draw()
+{
+	SDL_RenderCopy(&renderer, textura, nullptr, &rect);
 }

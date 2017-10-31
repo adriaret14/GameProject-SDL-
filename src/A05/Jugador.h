@@ -11,13 +11,18 @@
 #pragma once
 
 enum COLOR { VERDE, ROJO, NARANJA, AZUL, GRIS, ROSA, ORO, MARRON };
-enum DIREC { UP, DOWN, RIGHT, LEFT };
+enum DIREC { DOWN, LEFT, RIGHT, UP };
 
 class Jugador
 {
 public:
 	Jugador( SDL_Renderer &, std::string, COLOR, int, int, DIREC, int, int );
 	~Jugador();
+
+	int score;
+
+	void update();
+	void draw();
 
 	SDL_Renderer &renderer;
 	SDL_Rect rect, pos;
@@ -28,6 +33,11 @@ public:
 
 	int fw;
 	int fh;
+
+	int sentido;
+	int step;
+
+	bool moving;
 
 	DIREC dir;
 };

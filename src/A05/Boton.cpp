@@ -10,6 +10,7 @@ Boton::Boton( Texto t ) :
 
 Boton::~Boton()
 {
+	texto.~Texto();
 }
 
 void Boton::draw()

@@ -17,3 +17,8 @@ Background::~Background()
 {
 	SDL_DestroyTexture(bgTextura);
 }
+
+void Background::draw()
+{
+	SDL_RenderCopy(&renderer, bgTextura, nullptr, &bgRect);
+}

@@ -18,6 +18,8 @@ public:
 	std::vector<int> getMousePos();
 	SDL_Event event;
 
+	int escena;
+
 	bool w;
 	bool a;
 	bool s;

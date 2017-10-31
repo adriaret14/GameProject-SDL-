@@ -5,6 +5,7 @@
 Input::Input()
 {
 	quit = false;
+	escena = 0;
 	update();
 	
 }

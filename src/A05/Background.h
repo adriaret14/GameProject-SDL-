@@ -14,6 +14,8 @@ public:
 	Background( SDL_Renderer &, std::string, int, int );
 	~Background();
 
+	void draw();
+
 	SDL_Renderer &renderer;
 	SDL_Texture *bgTextura;
 	SDL_Rect	 bgRect;

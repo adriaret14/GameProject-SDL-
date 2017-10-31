@@ -13,8 +13,10 @@
 class Menu
 {
 public:
-	Menu( SDL_Renderer & , Boton &, Boton & );
+	Menu( SDL_Renderer & , Background &, Boton &, Boton & );
 	~Menu();
+
+	void draw();
 
 	//Renderer
 	SDL_Renderer &renderer;
