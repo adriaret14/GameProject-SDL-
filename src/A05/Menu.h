@@ -1,35 +1,18 @@
-#include <SDL.h>		// Always needs to be included for an SDL app
-#include <SDL_image.h>
-#include <SDL_ttf.h>
-#include <SDL_mixer.h>
-#include <time.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <iostream>
-#include <vector>
+#include "Escena.h"
+#include "Constants.h"
+#include <string>
+
 #pragma once
-#include "Boton.h"
-#include "Background.h"
-class Menu
+class Menu : public Escena
 {
 public:
-	Menu( SDL_Renderer & , Background &, Boton &, Boton & );
+	Menu(int, int);
 	~Menu();
 
 	void draw();
 
-	//Renderer
-	SDL_Renderer &renderer;
-
-	//Background
-	Background &background;
-
-	//Botón play
-	Boton &bPlay;
-
-	//Botón exit
-	Boton &bExit;
-
-
+	SDL_Rect bgrect;
+	SDL_Rect playrect;
+	SDL_Rect exitrect;
 };
 

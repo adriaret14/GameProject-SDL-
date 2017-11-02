@@ -18,6 +18,19 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="A05Base.cpp" />
+    <ClCompile Include="Escena.cpp" />
+    <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="Renderer.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Constants.h" />
+    <ClInclude Include="Escena.h" />
+    <ClInclude Include="Menu.h" />
+    <ClInclude Include="Renderer.h" />
+    <ClInclude Include="Types.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{07F340FD-40A8-4D51-ABB4-3A4536BFC18F}</ProjectGuid>
@@ -150,25 +163,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="A05Base.cpp" />
-    <ClCompile Include="Background.cpp" />
-    <ClCompile Include="Boton.cpp" />
-    <ClCompile Include="Input.cpp" />
-    <ClCompile Include="Jugador.cpp" />
-    <ClCompile Include="Menu.cpp" />
-    <ClCompile Include="Moneda.cpp" />
-    <ClCompile Include="Texto.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Background.h" />
-    <ClInclude Include="Boton.h" />
-    <ClInclude Include="Input.h" />
-    <ClInclude Include="Jugador.h" />
-    <ClInclude Include="Menu.h" />
-    <ClInclude Include="Moneda.h" />
-    <ClInclude Include="Texto.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
