@@ -10,9 +10,14 @@ public:
 	~Menu();
 
 	void draw();
+	void eventHandler();
+	void update();
 
 	SDL_Rect bgrect;
 	SDL_Rect playrect;
 	SDL_Rect exitrect;
+
+	//Controles
+	bool click;
 };
 

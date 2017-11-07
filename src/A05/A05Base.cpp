@@ -9,23 +9,38 @@
 #include "Menu.h"
 #include "Escena.h"
 #include "Renderer.h"
+#include "Pantalla1.h"
 
 //Game general information
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
 #define FPS 60
 
+bool colision(SDL_Rect r1, SDL_Rect r2)
+{
+	return (((r2.x > r1.x && r2.x < r1.x + r1.w) && (r2.y > r1.y && r2.y < r1.y + r1.h)) ||
+		((r2.x + r2.w > r1.x && r2.x + r2.w < r1.x + r1.w) && (r2.y > r1.y && r2.y < r1.y + r1.h)) ||
+		((r2.x > r1.x && r2.x < r1.x + r1.w) && (r2.y + r2.h > r1.y && r2.y + r2.h < r1.y + r1.h)) ||
+		(((r2.x + r2.w > r1.x && r2.x + r2.w < r1.x + r1.w) && (r2.y + r2.h > r1.y && r2.y + r2.h < r1.y + r1.h))));
+}
 
+bool coorEnRect(std::vector<int> pos, SDL_Rect r)
+{
+	return ((pos[0] > r.x && pos[0] < r.x + r.w) && (pos[1] > r.y && pos[1] < r.y + r.h));
+}
 
 int main(int, char*[]) {
 
 	Renderer::Instance();
-	Menu menu(SCREEN_WIDTH, SCREEN_HEIGHT);
+	//Menu menu(SCREEN_WIDTH, SCREEN_HEIGHT);
+	Pantalla1 pantalla1(SCREEN_WIDTH, SCREEN_HEIGHT);
+
 
 	while (true)
 	{
 		Renderer::Instance()->Clear();
-		menu.draw();
+		pantalla1.draw();
+		//menu.draw();
 		Renderer::Instance()->Render();
 	}
 	

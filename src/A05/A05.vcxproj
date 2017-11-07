@@ -21,13 +21,17 @@
   <ItemGroup>
     <ClCompile Include="A05Base.cpp" />
     <ClCompile Include="Escena.cpp" />
+    <ClCompile Include="Game.cpp" />
     <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="Pantalla1.cpp" />
     <ClCompile Include="Renderer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Constants.h" />
     <ClInclude Include="Escena.h" />
+    <ClInclude Include="Game.h" />
     <ClInclude Include="Menu.h" />
+    <ClInclude Include="Pantalla1.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Types.h" />
   </ItemGroup>

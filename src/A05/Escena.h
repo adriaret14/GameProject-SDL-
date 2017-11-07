@@ -3,9 +3,11 @@
 class Escena
 {
 public:
-	Escena(Renderer*);
+	Escena(std::string, int, int);
 	~Escena();
 
-	Renderer *renderer;
+	SDL_Rect bg;
+
+
 };
 
